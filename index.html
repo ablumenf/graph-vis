@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Aaron Blumenfeld</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Aaron Blumenfeld">
+		<meta name="author" content="Aaron Blumenfeld">
+
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+			* {
+			   font-size: 16px;
+			}
+		</style>
+		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+			</script>
+			<script type="text/javascript" async
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+			</script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+				  MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+				    cancel: ["Extension","cancel"],
+				  });
+				});
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				<a class="brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="http://www.aaronblumenfeld.com">Home</a></li>
+							<li><a href="../sunny">Sunny</a></li>
+							<li><a href="../kmeans">k-Means</a></li>
+							<li class="active"><a href="../graph-vis">Graph Vis</a></li>
+							<li><a href="mailto:me@aaronblumenfeld.com">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<p>You can generate the following graphs:</p>
+
+			<ul>
+				<li>$\ddot\smile$, the graph consisting of two copies of $C_4$ (that is, the 4-cycle), connected by one edge</li>
+				<li>$A_{100, 5, 100}$, where $A_{n,r,B}$ is defined to be $r$ copies of $K_n$ with $l_i \leq B$ edges
+			connecting the $i$th copy of $K_n$ to the $(i+1)-$st copy of $K_n$ (since $l_i \leq B$, there is some randomness here)</li>
+				<li>$B$, an example network modeling an academic department. This has 1,130 vertices and 5,635 edges. The model is as follows:
+				10 administrative folks, 20 professors (each teaching a 50-student class), 100 grad students (20 are TAs),
+				1,000 undergrads. The administrative folks and professors form a $K_{30}$ subgraph. Each grad student knows 10 professors.
+				Each undergrad knows his/her TA, and 20% of them know their professor. Each undergrad takes just one course (for simplicity).
+				Under <i>edge-repulsion</i> linlog, the large obvious cluster that forms is everyone except the undergrads and the TAs.</li>
+				<li>$K_{250}$, the complete graph on $250$ vertices</li>
+				<li>Facebook graph from <a href="http://snap.stanford.edu/">SNAP</a> (which has $> 4,000$ nodes)</li>
+				<li>Undirected version of Twitter graph from SNAP (which has $> 80,000$ nodes)
+			</ul>
+
+			<p>Setting random means each graph model starts with randomly placed vertices. Setting biased means we feed FR with initial
+			random placement, then feed the output into the input of node linlog, then feed that output into the input of edge linlog.</p>
+
+			<p>The Linlog energy models show clear clusters of vertices. One algorithm one could apply to actually assign cluster numbers to
+			vertices is <a href="../kmeans">$k$-means</a>. Note that both Linlog and $k$-means have the potential to suffer from poor local
+			solutions. The <a href="http://jgaa.info/accepted/2007/Noack2007.11.2.pdf">paper</a> also briefly mentions extensions of this
+			algorithm to compute clustering assignments (which involve computing barycenters -- not too far off from the ideas of $k$-means).</p>
+
+			<p>The "naive" $O(n^2)$ algorithm is used. Barnes-Hut could be used to approximate solutions in $O(m + n\log{n})$ time. This would likely
+			be necessary to look at any graphs significantly larger than the Facebook graph. In fact, even the Facebook graph is extremely slow
+			to draw using the $O(n^2)$ algorithm given here. There are console log statements telling you which iteration you're on for this
+			reason (100 iterations are used).</p>
+
+			<p>The edges, like in the paper, aren't drawn. The edges, other than with $\ddot\smile$, would likely clutter up the graphs and make them unreadable.
+			The idea is to get a picture of the clusters, not to see every little detail of the graph. There's also the question of whether
+			straight-line edges would be optimal, or some sort of arc, etc.</p>
+
+			<div>
+				<span id="buttons">
+					<button class="btn-primary" onclick="loadSmiley()">$\ddot\smile$</button>
+					<button class="btn-primary" onclick="loadA()">$A_{100, 5, 100}$</button>
+					<button class="btn-primary" onclick="loadB()">$B$</button>
+					<button class="btn-primary" onclick="loadK()">$K_{250}$</button>
+					<button class="btn-primary" onclick="loadFB()">Facebook</button>
+					<button class="btn-danger" onclick="loadTWTR()">Twitter</button>
+				</span>
+				<span>
+					<form>
+						<input type="radio" name="bias" value="Random" onclick="setBias(false)" autocomplete="off" checked>Random<br>
+						<input type="radio" name="bias" value="Biased" onclick="setBias(true)" autocomplete="off">Biased<br>
+					</form>
+				</span>
+			</div>
+			<div>
+				<span id="fr"></span>
+				<span id="linlog_node"></span>
+				<span id="linlog_edge"></span>
+			</div>
+
+			<script src="common_vars.js"></script>
+			<script src="fr.js"></script>
+			<script src="linlog.js"></script>
+			<script src="smiley_graph.js"></script>
+			<script src="A_graph.js"></script>
+			<script src="B_graph.js"></script>
+			<script src="K_graph.js"></script>
+			<script src="FB_graph.js"></script>
+			<!--<script src="TWTR_graph.js"></script>-->
+			<script src="load_plots.js"></script>
+
+			<script type="text/javascript">
+				var bias = false;
+				function setBias(val) {
+					bias = val;
+				}
+			</script>
+
+			<p id="count"></p>
+		</div>
+	</body>
+</html>
