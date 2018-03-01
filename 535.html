@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Graph Vis</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Aaron Blumenfeld">
+		<meta name="author" content="Aaron Blumenfeld">
+
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+			* {
+			   font-size: 16px;
+			}
+			pre code {
+				color: #1266ed;
+			}
+		</style>
+		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+			</script>
+			<script type="text/javascript" async
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+			</script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+				  MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+				    cancel: ["Extension","cancel"],
+				  });
+				});
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				<a class="brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="http://www.aaronblumenfeld.com">Home</a></li>
+							<li><a href="../sunny">Sunny</a></li>
+							<li><a href="../kmeans">k-Means</a></li>
+							<li class="active"><a href="../graph-vis">Graph Vis</a></li>
+							<li><a href="../teaching">Teaching</a></li>
+							<li><a href="../contact">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div>
+				<p>To choose your own graph, simply open the console up in your browser and type in the number of vertices and your adjacency lists
+				(the vertices are numbered $0$ through $n-1$). For example, to draw $K_5$, type the following, then click
+				<strong>Draw Graph</strong>:</p>
+
+				<p>
+					<pre><code>G1.numVertices = 5;<br>G1.adjacencyLists = [[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]];</code></pre>
+				</p>
+
+				<p>You <em>should</em> use G1 as your variable! The way to read this is that node $0$ is connected to nodes $1$ through $4$,
+				node $1$ is connected to node $0$ and nodes $2$ through $4$, etc.</p>
+
+				<p>Note that the result will not be unique. The algorithm used (Fruchterman-Reingold) searches for a <em>local</em>
+				minimum, and is quite unlikely to find an absolute minimum. In fact, you can repeatedly click <strong>Draw Graph</strong> and
+				watch the graph dance around.</p>
+
+				<p>What graph is the default graph isomorphic to? (<a href="https://en.wikipedia.org/wiki/Petersen_graph">Answer</a>.)</p>
+
+				<p>For further graph-drawing models, especially for larger graphs (but where edges aren't drawn), see
+				<a href="index.html">here</a>.</p>
+			</div>
+
+			<div align="center">
+				<div>
+					<button class="btn-primary" onclick="drawGraph()">Draw Graph</button>
+				</div>
+				<br>
+				<span id="fr" align="center"></span>
+			</div>
+
+			<script src="common_vars.js"></script>
+			<script src="fr.js"></script>
+			<script src="petersen_graph.js"></script>
+			<script src="535.js"></script>
+
+			<p id="positions"></p>
+		</div>
+	</body>
+</html>
