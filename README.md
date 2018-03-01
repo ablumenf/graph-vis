@@ -1,7 +1,7 @@
 # Graph Vis
 
 Graph Vis <br>
-Last Updated: December 6, 2017 <br>
+Last Updated: March 1, 2018 <br>
 Author: Aaron Blumenfeld
 
 ![linlog](linlog.jpg)
