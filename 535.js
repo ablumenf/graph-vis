@@ -2,6 +2,8 @@ var s = 500;
 var r = 4;
 var G = petersen; // graph
 var G1 = G; // user-input graph
+var labels = [];
+var labels1 = [];
 
 var blue = "#1266de";
 
@@ -48,7 +50,7 @@ function loadGraphs() {
 		.style("font-family", "Arial, Helvetica, sans-serif")
 		.style("font-weight", "bold")
 		.attr("fill", "#910b28")
-		.text((d, i) => i);
+		.text((d, i) => labels[i]);
 
 	G.vertexPositions = frGeometry;
 
@@ -87,6 +89,12 @@ function drawGraph() {
 	d3.select("#fr_g").selectAll("*").remove();
 	loadCanvases();
 	G = G1;
+	labels = labels1;
+	if(labels.length === 0) {
+		for(var i = 0; i < G.numVertices; i++) {
+			labels.push("" + i);
+		}
+	}
 	G.vertexPositions = [];
 	for(var i = 0; i < G.numVertices; i++) {
 		G.vertexPositions.push([gridSizeX*Math.random(), gridSizeY*Math.random()]);
@@ -95,7 +103,7 @@ function drawGraph() {
 
 	var s = "Vertex positions (scaled to [0, 1] x [0, 1]): <br><br>";
 	for(var i = 0; i < G.numVertices; i++) {
-		s += "Vertex " + i + ": (" + scale(G.vertexPositions[i][0]).toFixed(3) + ", " + (1 - scale(G.vertexPositions[i][1])).toFixed(3) + ") <br>";
+		s += "Vertex " + labels[i] + ": (" + scale(G.vertexPositions[i][0]).toFixed(3) + ", " + (1 - scale(G.vertexPositions[i][1])).toFixed(3) + ") <br>";
 	}
 	document.getElementById("positions").innerHTML = s;
 }
