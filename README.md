@@ -1,7 +1,7 @@
 # Graph Vis
 
 Graph Vis <br>
-Last Updated: March 26, 2018 <br>
+Last Updated: September 29, 2018 <br>
 Author: Aaron Blumenfeld
 
 ![linlog](linlog.jpg)
@@ -10,11 +10,9 @@ Author: Aaron Blumenfeld
 
 Linlog, Fruchterman Reingold.
 
-Can be seen live at http://aaronblumenfeld.com/graph-vis/
+Can be seen live at http://aaronblumenfeld.com/graph-vis/544.html
 
 There's also a simpler version using just Fruchterman Reingold that draws in the edges.
-You can type in your own graphs (using the browser console).
+You can type in your own graphs.
 
 ![petersen](petersen.jpg)
-
-Can be seen live at http://aaronblumenfeld.com/graph-vis/535.html
