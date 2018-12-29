@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+    	<title>Graph Vis</title>
+
+    	<link href="../css/bootstrap.min.css" rel="stylesheet">
+    	<link href="../css/ab.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/contrib/auto-render.min.js" integrity="sha384-yACMu8JWxKzSp/C1YV86pzGiQ/l1YUfE8oPuahJQxzehAjEt2GiQuy/BIvl9KyeF" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+	</head>
+
+  <body>
+
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-2">
+					<li class="nav-item">
+						<a class="nav-link" href="http://www.aaronblumenfeld.com">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../sunny">Sunny</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../kmeans">k-Means</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../graph-vis">Graph Vis</a>
+					</li>
+					<li class="dropdown">
+						<a class="nav-link dropdown-toggle" href="../crypto" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+							Crypto
+						</a>
+						<div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="../crypto/numtheory">Number Theory</a>
+							<a class="dropdown-item" href="../crypto/rsa">RSA</a>
+							<a class="dropdown-item" href="../crypto/dl">Discrete Logs</a>
+							<a class="dropdown-item" href="../crypto/ecc">Elliptic Curve Cryptography</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../teaching">Teaching</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../contact">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-3">
+
+		<p>Setting random means each graph model starts with randomly placed vertices. Setting biased means we feed Fruchterman-Reingold with initial
+		random placement, then feed that output into the input of node linlog, then feed that output into the input of edge linlog.</p>
+
+		<p>You can toggle whether or not edges are shown by pressing 'e' (not shown by default). You can toggle whether or not vertex labels are shown
+		by pressing 'l' (not shown by default, and not recommended for large graphs unless you're zoomed in (future feature)).</p>
+
+		<div id="accordion1" class="mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">
+						<button class="btn btn-link" data-toggle="collapse" data-target="#graph-details" aria-expanded="true" aria-controls="graph-details">
+							Which graphs can I generate?
+						</button>
+					</h5>
+				</div>
+
+				<div id="graph-details" class="collapse" data-parent="#accordion1">
+					<div class="card-body">
+						<ul>
+							<li><span class="tex" content="A_{100, 5, 100}"></span>, where <span class="tex" content="A_{n,r,B}"></span> is defined to be
+							<span class="tex" content="r"></span> copies of <span class="tex" content="K_n"></span> with <span class="tex" content="l_i \leq B"></span> edges
+							connecting the <span class="tex" content="i"></span>th copy of <span class="tex" content="K_n"></span> to the <span class="tex" content="(i+1)"></span>-st
+							copy of <span class="tex" content="K_n"></span> (since <span class="tex" content="l_i \leq B"></span>, there is some randomness here)</li>
+							<li><span class="tex" content="B"></span>, an example network modeling an academic department. This has 1,130 vertices and 5,635 edges. The model is as follows:
+							10 administrative folks, 20 professors (each teaching a 50-student class), 100 grad students (20 are TAs),
+							1,000 undergrads. The administrative folks and professors form a <span class="tex" content="K_{30}"></span> subgraph. Each grad student knows 10 professors.
+							Each undergrad knows his/her TA, and 20% of them know their professor. Each undergrad takes just one course (for simplicity).
+							Under <i>edge-repulsion</i> linlog, the large obvious cluster that forms is everyone except the undergrads and the TAs.</li>
+							<li><span class="tex" content="K_{250}"></span>, the complete graph on 250 vertices</li>
+							<li>Facebook graph from <a href="http://snap.stanford.edu/">SNAP</a> (which has > 4,000 nodes)</li>
+							<li>Your own graph! Enter your adjacency list (and optionally, vertex labels).</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			<div>
+				<div id="buttons">
+					<div>
+						<button class="btn btn-primary" id="buttonA" onclick="load(A, '#buttonA')"><span class="tex" content="A_{100, 5, 100}"></span></button>
+						<button class="btn btn-primary" id="buttonB" onclick="load(B, '#buttonB')"><span class="tex" content="B"></span></button>
+						<button class="btn btn-primary" id="buttonK" onclick="load(K, '#buttonK')"><span class="tex" content="K_{250}"></span></button>
+						<button class="btn btn-primary" id="buttonFB" onclick="load(FB, '#buttonFB')">Facebook</button>
+						<button class="btn btn-info" id="buttonCustom" onclick="loadCustom()">Custom</button>
+					</div>
+				</div>
+				<span>
+					<form class="mt-2">
+						<input type="radio" name="bias" value="Random" onclick="setBias(false)" autocomplete="off" checked>
+							<span>Random</span>
+						</input>
+						<input class="ml-2" type="radio" name="bias" value="Biased" onclick="setBias(true)" autocomplete="off">
+							<span>Biased</span>
+						</input>
+					</form>
+				</span>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="card h-100">
+						<h5 class="card-header text-center">Adjacency Lists</h5>
+						<div class="card-body">
+							<textarea rows="2" cols="50" class="form-control" id="graphInput"
+							placeholder="[[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2, 4], [3, 5, 6, 7], [4, 6, 7], [4, 5, 7], [4, 5, 6]]"></textarea>
+							<div id="adjListAlert" class="mt-2 text-center"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="card h-100">
+						<h5 class="card-header text-center">Vertex Labels</h5>
+						<div class="card-body">
+							<textarea rows="2" cols="50" class="form-control" id="labelsInput"
+							placeholder='["A", "B", "C", "D", "E", "F", "G", "H"]'></textarea>
+							<div id="labelListAlert" class="mt-2 text-center"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="col-lg-3 col-md-12"></div>
+				<div class="col-lg-6 col-md-12">
+					<div class="card h-100" style="min-width: 500px;">
+						<h4 class="card-header text-center" id="graphHeader">Fruchterman-Reingold</h4>
+							<div class="card-body text-center" id="fr"></div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-12"></div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="col-lg-6">
+					<div class="card h-100" style="min-width: 500px;">
+						<h4 class="card-header text-center" id="graphHeader">Node-Repulsion Linlog</h4>
+							<div class="card-body text-center" id="linlog_node"></div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+				<div class="card h-100" style="min-width: 500px;">
+					<h4 class="card-header text-center" id="graphHeader">Edge-Repulsion Linlog</h4>
+						<div class="card-body text-center" id="linlog_edge"></div>
+					</div>
+				</div>
+			</div>
+
+			<script src="models/common_vars.js"></script>
+			<script src="graphs/smiley_graph.js"></script>
+			<script src="graphs/A_graph.js"></script>
+			<script src="graphs/B_graph.js"></script>
+			<script src="graphs/K_graph.js"></script>
+			<script src="graphs/FB_graph.js"></script>
+			<script src="models/fr.js"></script>
+			<script src="models/linlog.js"></script>
+			<script src="plots/544.js"></script>
+
+			<script type="text/javascript">
+				var bias = false;
+				function setBias(val) {
+					bias = val;
+				}
+			</script>
+
+		<p id="count"></p>
+
+		<p>The Linlog energy models show clear clusters of vertices. One algorithm one could apply to actually assign cluster numbers to
+		vertices is <a href="../kmeans"><span class="tex" content="k"></span>-means</a>. Note that both Linlog and <span class="tex" content="k"></span>-means
+		have the potential to suffer from poor local solutions. The <a href="http://jgaa.info/accepted/2007/Noack2007.11.2.pdf">paper</a> also briefly
+		mentions extensions of this algorithm to compute clustering assignments (which involve computing barycenters &mdash; not too far off
+		from the ideas of <span class="tex" content="k"></span>-means).</p>
+
+	</div>
+
+	<script src="../katexBinding.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

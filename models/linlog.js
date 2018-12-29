@@ -73,6 +73,10 @@ function linlog(numVertices, adjacencyLists, positions, numIters, edgeRepulsion)
 	var oldPos = [0, 0];
 	var direction = [0, 0];
 	var optPos = [0, 0];
+	let stepSizes = [1/2048, 1/1024, 1/512, 1/256, 1/128, 1/64, 1/32, 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
+	//let stepSizes = edgeRepulsion ?
+		//[1/2048, 1/16, 1/8, 2, 4, 8, 16, 32, 64, 128, 256, 1024, 2048] :
+		//[1/2048, 1/64, 1/128, 1/64, 1/32, 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, 32, 64, 128, 256];
 	for(var i = 0; i < numIters; i++) {
 		console.log("Iteration " + (i+1));
 
@@ -83,7 +87,6 @@ function linlog(numVertices, adjacencyLists, positions, numIters, edgeRepulsion)
 			oldPos = [rval[v][0], rval[v][1]];
 			var optEnergy = oldEnergy;
 			var opt_k = 0;
-			var stepSizes = [1/2048, 1/1024, 1/512, 1/256, 1/128, 1/64, 1/32, 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 			for(var k = 0; k <= stepSizes.length; k++) {
 				rval[v][0] = oldPos[0] + direction[0] * stepSizes[k];
 				rval[v][1] = oldPos[1] + direction[1] * stepSizes[k];

@@ -1,145 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 	<head>
-		<meta charset="utf-8"/>
-		<title>Graph Vis</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Aaron Blumenfeld">
-		<meta name="author" content="Aaron Blumenfeld">
+    	<title>Graph Vis</title>
 
-		<link href="../css/bootstrap.css" rel="stylesheet">
-		<style>
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-			* {
-			   font-size: 16px;
-			}
-		</style>
-		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/x-mathjax-config">
-				MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-			</script>
-			<script type="text/javascript" async
-				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-			</script>
-			<script type="text/x-mathjax-config">
-				MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
-				  MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
-				    cancel: ["Extension","cancel"],
-				  });
-				});
-		</script>
+    	<link href="../css/bootstrap.min.css" rel="stylesheet">
+    	<link href="../css/ab.css" rel="stylesheet">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/contrib/auto-render.min.js" integrity="sha384-yACMu8JWxKzSp/C1YV86pzGiQ/l1YUfE8oPuahJQxzehAjEt2GiQuy/BIvl9KyeF" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
 	</head>
 
-	<body>
+  <body>
 
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				<a class="brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li><a href="http://www.aaronblumenfeld.com">Home</a></li>
-							<li><a href="../sunny">Sunny</a></li>
-							<li><a href="../kmeans">k-Means</a></li>
-							<li class="active"><a href="../graph-vis">Graph Vis</a></li>
-							<li><a href="../teaching">Teaching</a></li>
-							<li><a href="../contact">Contact</a></li>
-						</ul>
+		<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-2">
+						<li class="nav-item">
+							<a class="nav-link" href="http://www.aaronblumenfeld.com">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../sunny">Sunny</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../kmeans">k-Means</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../graph-vis">Graph Vis</a>
+						</li>
+						<li class="dropdown">
+							<a class="nav-link dropdown-toggle" href="../crypto" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+								Crypto
+							</a>
+							<div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="../crypto/numtheory">Number Theory</a>
+								<a class="dropdown-item" href="../crypto/rsa">RSA</a>
+								<a class="dropdown-item" href="../crypto/dl">Discrete Logs</a>
+								<a class="dropdown-item" href="../crypto/ecc">Elliptic Curve Cryptography</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../teaching">Teaching</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container mt-3">
+
+			<p>Type in your adjacency lists (and <em>optionally</em>, vertex labels) in the input below, and click <span class="font-weight-bold">Draw Graph</span>.
+			The default graph (if you leave the boxes blank) has 10 vertices and 15 edges. What graph is the default graph isomorphic to? (<a href="https://en.wikipedia.org/wiki/Petersen_graph" target="_blank">Answer</a>.)
+			The suggested graph (based on the input boxes) is <span class="tex" content="K_5"></span>.</p>
+
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="card h-100">
+						<h5 class="card-header text-center">Adjacency Lists</h5>
+						<div class="card-body">
+							<textarea rows="2" cols="50" class="form-control" id="graphInput"
+							placeholder="[[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]]"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="card h-100">
+						<h5 class="card-header text-center">Vertex Labels</h5>
+						<div class="card-body">
+							<textarea rows="2" cols="50" class="form-control" id="labelsInput"
+							placeholder='["A", "B", "C", "D", "E"]'></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="container">
-			<p>You can generate the following graphs:</p>
+			<div class="row mt-4">
+				<div class="col-lg-3"></div>
+				<div class="col-lg-6">
+					<div class="card h-100" style="min-width: 500px;">
+						<h4 class="card-header text-center" id="graphHeader">Graph 0/0</h4>
+							<div class="card-body text-center" id="fr"></div>
+							<div class="card-footer text-center">
+								<button class="btn btn-success" onclick="prevGraph()">Previous Graph</button>
+								<button class="btn btn-primary" onclick="drawGraphAndUpdate()">Draw Graph</button>
+								<button class="btn btn-success" onclick="nextGraph()">Next Graph</button>
+								<div id="graphAlert" class="mt-2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3"></div>
 
-			<ul>
-				<li>$\ddot\smile$, the graph consisting of two copies of $K_4$, connected by one edge</li>
-				<li>$A_{100, 5, 100}$, where $A_{n,r,B}$ is defined to be $r$ copies of $K_n$ with $l_i \leq B$ edges
-			connecting the $i$th copy of $K_n$ to the $(i+1)-$st copy of $K_n$ (since $l_i \leq B$, there is some randomness here)</li>
-				<li>$B$, an example network modeling an academic department. This has 1,130 vertices and 5,635 edges. The model is as follows:
-				10 administrative folks, 20 professors (each teaching a 50-student class), 100 grad students (20 are TAs),
-				1,000 undergrads. The administrative folks and professors form a $K_{30}$ subgraph. Each grad student knows 10 professors.
-				Each undergrad knows his/her TA, and 20% of them know their professor. Each undergrad takes just one course (for simplicity).
-				Under <i>edge-repulsion</i> linlog, the large obvious cluster that forms is everyone except the undergrads and the TAs.</li>
-				<li>$K_{250}$, the complete graph on $250$ vertices</li>
-				<li>Facebook graph from <a href="http://snap.stanford.edu/">SNAP</a> (which has $> 4,000$ nodes)</li>
-				<li>Undirected version of Twitter graph from SNAP (which has $> 80,000$ nodes)
-			</ul>
+				<script src="models/common_vars.js"></script>
+				<script src="models/fr.js"></script>
+				<script src="graphs/petersen_graph.js"></script>
+				<script src="plots/load_plot.js"></script>
 
-			<p>Setting random means each graph model starts with randomly placed vertices. Setting biased means we feed FR with initial
-			random placement, then feed the output into the input of node linlog, then feed that output into the input of edge linlog.</p>
-
-			<p>The Linlog energy models show clear clusters of vertices. One algorithm one could apply to actually assign cluster numbers to
-			vertices is <a href="../kmeans">$k$-means</a>. Note that both Linlog and $k$-means have the potential to suffer from poor local
-			solutions. The <a href="http://jgaa.info/accepted/2007/Noack2007.11.2.pdf">paper</a> also briefly mentions extensions of this
-			algorithm to compute clustering assignments (which involve computing barycenters -- not too far off from the ideas of $k$-means).</p>
-
-			<p>The "naive" $O(n^2)$ algorithm is used. Barnes-Hut could be used to approximate solutions in $O(m + n\log{n})$ time. This would likely
-			be necessary to look at any graphs significantly larger than the Facebook graph. In fact, even the Facebook graph is extremely slow
-			to draw using the $O(n^2)$ algorithm given here. There are console log statements telling you which iteration you're on for this
-			reason (100 iterations are used).</p>
-
-			<p>The edges, like in the paper, aren't drawn. The edges, other than with $\ddot\smile$, would likely clutter up the graphs and make them unreadable.
-			The idea is to get a picture of the clusters, not to see every little detail of the graph. There's also the question of whether
-			straight-line edges would be optimal, or some sort of arc, etc.</p>
-
-			<p>If you want to see graphs drawn with edges (for small enough graphs that you can type in the adjacency lists by hand),
-			see <a href="535.html">here</a>. Instructions on how to type in your graph are provided there.</p>
-
-			<div>
-				<span id="buttons">
-					<button class="btn-primary" onclick="loadSmiley()">$\ddot\smile$</button>
-					<button class="btn-primary" onclick="loadA()">$A_{100, 5, 100}$</button>
-					<button class="btn-primary" onclick="loadB()">$B$</button>
-					<button class="btn-primary" onclick="loadK()">$K_{250}$</button>
-					<button class="btn-primary" onclick="loadFB()">Facebook</button>
-					<button class="btn-danger" onclick="loadTWTR()">Twitter</button>
-				</span>
-				<span>
-					<form>
-						<input type="radio" name="bias" value="Random" onclick="setBias(false)" autocomplete="off" checked>Random<br>
-						<input type="radio" name="bias" value="Biased" onclick="setBias(true)" autocomplete="off">Biased<br>
-					</form>
-				</span>
-			</div>
-			<div>
-				<span id="fr"></span>
-				<span id="linlog_node"></span>
-				<span id="linlog_edge"></span>
+				<div class="row mt-3">
+					<div class="col-lg-3"></div>
+					<div class="col-lg-6">
+						<table class="table table-borderless table-dark table-hover" style="width: 300px; margin-top: 5px;" align="center">
+							<thead id="tableheader"></thead>
+							<tbody id="positions"></tbody>
+						</table>
+					</div>
+					<div class="col-lg-3"></div>
 			</div>
 
-			<script src="common_vars.js"></script>
-			<script src="fr.js"></script>
-			<script src="linlog.js"></script>
-			<script src="smiley_graph.js"></script>
-			<script src="A_graph.js"></script>
-			<script src="B_graph.js"></script>
-			<script src="K_graph.js"></script>
-			<script src="FB_graph.js"></script>
-			<!--<script src="TWTR_graph.js"></script>-->
-			<script src="load_plots.js"></script>
+			<p>For further graph-drawing models, see <a href="544.html">here</a>.</p>
 
-			<script type="text/javascript">
-				var bias = false;
-				function setBias(val) {
-					bias = val;
-				}
-			</script>
+			<div id="accordion" class="mb-3">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="mb-0">
+							<button class="btn btn-link" data-toggle="collapse" data-target="#math-details" aria-expanded="true" aria-controls="math-details">
+								Click to see more of the math details.
+							</button>
+						</h5>
+					</div>
 
-			<p id="count"></p>
+					<div id="math-details" class="collapse" data-parent="#accordion">
+						<div class="card-body">
+							<p>You can't use LaTeX code in the labels. Even though MathJax is used on this page, it doesn't play nice with drawing text in d3.
+							It's probably best to create a figure using TikZ if using more complicated labels is necessary (like <span class="tex" content="\alpha_{\beta_i}">
+							</span> or something). The vertex positions are printed to assist you with this task.</p>
+
+							<p>Note that the result will not be unique. The algorithm used (Fruchterman-Reingold) searches for a <span class="font-italic">local</span>
+							minimum, and is quite unlikely to find an absolute minimum. In fact, you can repeatedly click <span class="font-weight-bold">
+							Draw Graph</span> and watch the graph dance around.</p>
+
+							<p>Note that this algorithm won't usually find the typical drawing for the default graph (star inside a pentagon) because it's finding a local minimum,
+							but about a month after creating an earlier iteration of this page, I did discover that drawing <span class="font-italic">can</span> be
+							computed using Fruchterman-Reingold. I probably drew the graph hundreds of times over that month before the "nice" drawing came out.
+							See <a href="petersen.jpg" target="_blank">here</a> for proof. I don't know if the total energy of that layout is lower than that
+							of the typical layouts FR computes. It would be interesting to look into this, and to think about how to bias the initial positions
+							to get these more aesthetic drawings.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</body>
+
+		<script src="../katexBinding.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
 </html>

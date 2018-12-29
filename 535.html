@@ -1,135 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 	<head>
-		<meta charset="utf-8"/>
-		<title>Graph Vis</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Aaron Blumenfeld">
-		<meta name="author" content="Aaron Blumenfeld">
+    	<title>Graph Vis</title>
 
-		<link href="../css/bootstrap.css" rel="stylesheet">
-		<style>
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-			* {
-			   font-size: 16px;
-			}
-			pre code {
-				color: #1266ed;
-			}
-		</style>
-		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/x-mathjax-config">
-				MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-			</script>
-			<script type="text/javascript" async
-				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-			</script>
-			<script type="text/x-mathjax-config">
-				MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
-				  MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
-				    cancel: ["Extension","cancel"],
-				  });
-				});
-		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+    	<link href="../css/bootstrap.min.css" rel="stylesheet">
+    	<link href="../css/ab.css" rel="stylesheet">
+		<meta http-equiv="refresh" content="0; url=../graph-vis" />
 	</head>
 
-	<body>
+  <body>
 
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				<a class="brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li><a href="http://www.aaronblumenfeld.com">Home</a></li>
-							<li><a href="../sunny">Sunny</a></li>
-							<li><a href="../kmeans">k-Means</a></li>
-							<li class="active"><a href="../graph-vis">Graph Vis</a></li>
-							<li><a href="../teaching">Teaching</a></li>
-							<li><a href="../contact">Contact</a></li>
-						</ul>
-					</div>
+		<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="http://www.aaronblumenfeld.com">Aaron Blumenfeld</a>
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-2">
+						<li class="nav-item">
+							<a class="nav-link" href="http://www.aaronblumenfeld.com">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../sunny">Sunny</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../kmeans">k-Means</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../graph-vis">Graph Vis</a>
+						</li>
+						<li class="dropdown">
+							<a class="nav-link dropdown-toggle" href="../crypto" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+								Crypto
+							</a>
+							<div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="../crypto/numtheory">Number Theory</a>
+								<a class="dropdown-item" href="../crypto/rsa">RSA</a>
+								<a class="dropdown-item" href="../crypto/dl">Discrete Logs</a>
+								<a class="dropdown-item" href="../crypto/ecc">Elliptic Curve Cryptography</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../teaching">Teaching</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../contact">Contact</a>
+						</li>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 
-		<div class="container">
-			<div>
-				<p>To choose your own graph, simply open the console up in your browser and type in the number of vertices and your adjacency lists.
-				For example, to draw $K_5$, type the following, then click <strong>Draw Graph</strong>:</p>
+		<div class="container mt-3">
+        	<p>Click <a href="../graph-vis">here</a> if you're not redirected automatically.</p>
+        </div>
 
-				<p>
-					<pre><code>G1.numVertices = 5;<br>G1.adjacencyLists = [[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]];</code></pre>
-				</p>
+		<script src="../katexBinding.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.bundle.min.js"></script>
 
-				<p>To draw $K_{3, 3}$, type the following, then click <strong>Draw Graph</strong>. (There are probably better algorithms out there for
-				drawing bipartite graphs.)</p>
+  </body>
 
-				<p>
-					<pre><code>G1.numVertices = 6;<br>G1.adjacencyLists = [[3, 4, 5], [3, 4, 5], [3, 4, 5], [0, 1, 2], [0, 1, 2], [0, 1, 2]];</code></pre>
-				</p>
-
-				<p>You <em>should</em> use G1 as your variable! The way to read this is that node $0$ is connected to nodes $1$ through $4$,
-				node $1$ is connected to node $0$ and nodes $2$ through $4$, etc.</p>
-
-				<p>You can also specify your node labeling. The default labels are $0$ through $n-1$, where $n$ is the number of vertices. You can change this
-				to, say, $A, \ldots, J$ (for the default graph, which has 10 vertices) (before clicking <strong>Draw Graph</strong>) by typing in the following:
-
-				<p>
-					<pre><code>labels1 = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];</code></pre>
-				</p>
-
-				<p>Or even something more creative like (although it's probably best not to have super long labels, in interest of readability):</p>
-
-				<p>
-					<pre><code>labels1 = ["hello", "arkona", "apkoha", "vert", "hi", "print", "what", ":)", "good", "bye"];</code></pre>
-				</p>
-
-				<p>You can't use LaTeX code in the labels, though. Even though MathJax is used on this page, it doesn't play nice with drawing text in d3.
-				It's probably best to create a figure using TikZ if using more complicated labels is necessary (like $\alpha_{\beta_i}$ or something).
-				The vertex positions are printed below to assist you with this task.</p>
-
-				<p>Note that the result will not be unique. The algorithm used (Fruchterman-Reingold) searches for a <em>local</em>
-				minimum, and is quite unlikely to find an absolute minimum. In fact, you can repeatedly click <strong>Draw Graph</strong> and
-				watch the graph dance around.</p>
-
-				<p>What graph is the default graph isomorphic to? (<a href="https://en.wikipedia.org/wiki/Petersen_graph">Answer</a>.) Note that
-				this algorithm won't usually find the typical drawing for this graph (star inside a pentagon) because it's finding a local minimum,
-				but about a month after creating this page, I did discover that drawing <em>can</em> be computed using Fruchterman-Reingold. I
-				probably drew the graph hundreds of times over that month before the "nice" drawing came out. See <a href="petersen.jpg">here</a>
-				for proof. I don't know if the total energy of that layout is lower than that of the typical layouts FR computes. It would be
-				interesting to look into this, and to think about how to bias the initial positions to get these more aesthetic drawings.</p>
-
-				<p>For further graph-drawing models, especially for larger graphs (but where edges aren't drawn), see
-				<a href="index.html">here</a>.</p>
-			</div>
-
-			<div align="center">
-				<div>
-					<button class="btn-primary" onclick="drawGraph()">Draw Graph</button>
-				</div>
-				<br>
-				<span id="fr" align="center"></span>
-			</div>
-
-			<script src="common_vars.js"></script>
-			<script src="fr.js"></script>
-			<script src="petersen_graph.js"></script>
-			<script src="535.js"></script>
-
-			<p id="positions"></p>
-		</div>
-	</body>
 </html>
